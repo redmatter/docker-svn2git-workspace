@@ -3,9 +3,10 @@ FROM debian:jessie
 MAINTAINER Dino.Korah@redmatter.com
 
 ENV TZ="Europe/London" \
-    EDITOR="/usr/bin/vim"
+    EDITOR="/usr/bin/vim" \
+    TERM="linux"
 
-COPY entrypoint.sh /
+COPY entrypoint.sh wait-up.sh /
 
 RUN ( \
     export DEBIAN_FRONTEND=noninteractive; \
