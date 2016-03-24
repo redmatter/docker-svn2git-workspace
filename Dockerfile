@@ -11,7 +11,7 @@ COPY entrypoint.sh wait-up.sh /
 RUN ( \
     export DEBIAN_FRONTEND=noninteractive; \
     export BUILD_DEPS=""; \
-    export APP_DEPS="sudo git-core git-svn ruby rubygems vim-nox"; \
+    export APP_DEPS="sudo openssh-client subversion git-core git-svn ruby rubygems vim-nox"; \
 
     set -e -u -x; \
 
