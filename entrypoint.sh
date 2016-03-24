@@ -12,6 +12,12 @@ fi
 
 case "$1" in
     setup-workspace)
+        if [ ! -d /workspace/.ssh ]; then
+            mkdir /workspace/.ssh;
+            chmod go-rwx /workspace/.ssh;
+            chown migrator:migrator /workspace/.ssh;
+        fi
+
         # change permission; not recursive by purpose
         # recursive chown can take ages if the volume has a lot of files and directories
         exec chown migrator:migrator /workspace;
