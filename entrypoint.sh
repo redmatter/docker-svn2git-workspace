@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1" != setup-workspace ] && [ ! -w /workspace ]; then
+if [ "$1" != setup-workspace ] && [ -d /workspace -a ! -w /workspace ]; then
     # we need root privileges to change permission of the directory
     if ! sudo "$0" setup-workspace; then
         echo setup-workspace failed\; giving up.;
@@ -14,6 +14,12 @@ case "$1" in
         # recursive chown can take ages if the volume has a lot of files and directories
         chown migrator:migrator /workspace;
         exit
+        ;;
+    wait-up)
+        # used when run from docker compose
+        while :; do
+            sleep 1;
+        done
         ;;
     bash|/bin/bash)
         command=/bin/bash;
