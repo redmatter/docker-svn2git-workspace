@@ -4,7 +4,9 @@ MAINTAINER Dino.Korah@redmatter.com
 
 ENV TZ="Europe/London" \
     EDITOR="/usr/bin/vim" \
-    TERM="linux"
+    TERM="linux" \
+    SHELL="/bin/bash" \
+    HOME="/workspace"
 
 COPY entrypoint.sh wait-up.sh /
 
@@ -28,12 +30,13 @@ RUN ( \
 
     echo "migrator ALL=(ALL) NOPASSWD: /entrypoint.sh setup-workspace" > /etc/sudoers.d/migrator-setup-workspace; \
 
-    mkdir /workspace; \
-    useradd --shell /bin/bash --home-dir /workspace migrator; \
+    mkdir $HOME; \
+    useradd --shell $SHELL --home-dir $HOME migrator; \
 )
 
 USER migrator:migrator
-WORKDIR "/workspace"
+WORKDIR $HOME
+VOLUME $HOME
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "bash" ]
