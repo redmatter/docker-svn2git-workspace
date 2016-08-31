@@ -8,12 +8,10 @@ ENV TZ="Europe/London" \
     SHELL="/bin/bash" \
     WORKSPACE="/workspace"
 
-COPY entrypoint.sh wait-up.sh /
-
 RUN ( \
     export DEBIAN_FRONTEND=noninteractive; \
     export BUILD_DEPS=""; \
-    export APP_DEPS="sudo openssh-client subversion git-core git-svn ruby rubygems vim-nox screen"; \
+    export APP_DEPS="openssh-client subversion git-core git-svn ruby rubygems vim-nox"; \
 
     set -e -u -x; \
 
@@ -30,6 +28,3 @@ RUN ( \
 )
 
 WORKDIR $WORKSPACE
-
-ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "bash" ]
