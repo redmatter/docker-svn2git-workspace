@@ -6,7 +6,7 @@ ENV TZ="Europe/London" \
     EDITOR="/usr/bin/vim" \
     TERM="linux" \
     SHELL="/bin/bash" \
-    HOME="/workspace"
+    WORKSPACE="/workspace"
 
 COPY entrypoint.sh wait-up.sh /
 
@@ -27,16 +27,9 @@ RUN ( \
     apt-get clean autoclean; \
     apt-get autoremove --yes; \
     rm -rf /var/lib/{apt,dpkg,cache,log}/; \
-
-    echo "migrator ALL=(ALL) NOPASSWD: /entrypoint.sh setup-workspace" > /etc/sudoers.d/migrator-setup-workspace; \
-
-    mkdir $HOME; \
-    useradd --shell $SHELL --home-dir $HOME migrator; \
 )
 
-USER migrator:migrator
-WORKDIR $HOME
-VOLUME $HOME
+WORKDIR $WORKSPACE
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "bash" ]
