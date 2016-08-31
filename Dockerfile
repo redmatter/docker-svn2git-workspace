@@ -27,4 +27,6 @@ RUN ( \
     rm -rf /var/lib/{apt,dpkg,cache,log}/; \
 )
 
+COPY get-authors.sh /usr/bin/get-authors.sh
+
 WORKDIR $WORKSPACE
