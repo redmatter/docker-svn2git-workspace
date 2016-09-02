@@ -1,9 +1,19 @@
 #!/usr/bin/env sh
 
 REPO_URL=$1
-OUTPUT_PATH=${2:-authors.txt}
+EMAIL_DOMAIN=$2
+OUTPUT_PATH=${3:-authors.txt}
 
-EMAIL_DOMAIN="redmatter.com"
+if [ -z "$REPO_URL" ]; then
+    echo "First argument must be the SVN repo"
+    exit 1
+fi
+
+if [ -z "$EMAIL_DOMAIN" ]; then
+    echo "Second argument must be email domain name"
+    exit 1
+fi
+
 svn log ${REPO_URL} --xml | grep '<author>' | sort -u > "${OUTPUT_PATH}"
 
 # Deal with the standard case, where a username is defined as firstname.lastname
