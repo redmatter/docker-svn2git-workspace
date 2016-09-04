@@ -11,7 +11,7 @@ ENV TZ="Europe/London" \
 RUN ( \
     export DEBIAN_FRONTEND=noninteractive; \
     export BUILD_DEPS=""; \
-    export APP_DEPS="openssh-client subversion git-core git-svn ruby rubygems vim-nox"; \
+    export APP_DEPS="openssh-client subversion git-core git-svn ruby rubygems vim-nox xmlstarlet"; \
 
     set -e -u -x; \
 
