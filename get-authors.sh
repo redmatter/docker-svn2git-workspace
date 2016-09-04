@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
-REPO_URL=$1
-EMAIL_DOMAIN=$2
+REPO_URL=$1 && shift
+EMAIL_DOMAIN=$1 && shift
+SVN_LOG_ARGS=$@
 
 if [ -z "$REPO_URL" ]; then
     echo "First argument must be the SVN repo"
@@ -13,7 +14,7 @@ if [ -z "$EMAIL_DOMAIN" ]; then
     exit 1
 fi
 
-svn log --xml ${REPO_URL} | \
+svn log --xml ${SVN_LOG_ARGS} ${REPO_URL} | \
 # Extract the SVN usernames from the <author> XML tags
 xmlstarlet sel -t -v '//author/text()' --nl - | \
 # Sort and get only unique entries
