@@ -20,10 +20,10 @@ The provided `docker-compose.yml` contains all the configuration needed to pass 
 
     docker-compose run --rm svn2git
 
-Once in the container, you can use the `get-authors.sh` script to populate a file with a mapping of SVN users to Git
+Once in the container, you can use the `get-authors` script to populate a file with a mapping of SVN users to Git
 users:
 
-    get-authors.sh <svn+ssh://host/path/to/trunk> <email-domain.com> > authors.txt
+    get-authors <svn+ssh://host/path/to/trunk> <email-domain.com> > authors.txt
 
 This will map SVN users to Git users as follows:
 
