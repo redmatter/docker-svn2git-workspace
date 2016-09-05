@@ -6,14 +6,12 @@ ENV TZ="Europe/London" \
     EDITOR="/usr/bin/vim" \
     TERM="linux" \
     SHELL="/bin/bash" \
-    HOME="/workspace"
-
-COPY entrypoint.sh wait-up.sh /
+    WORKSPACE="/workspace"
 
 RUN ( \
     export DEBIAN_FRONTEND=noninteractive; \
     export BUILD_DEPS=""; \
-    export APP_DEPS="sudo openssh-client subversion git-core git-svn ruby rubygems vim-nox screen"; \
+    export APP_DEPS="openssh-client subversion git-core git-svn ruby rubygems vim-nox xmlstarlet"; \
 
     set -e -u -x; \
 
@@ -27,16 +25,8 @@ RUN ( \
     apt-get clean autoclean; \
     apt-get autoremove --yes; \
     rm -rf /var/lib/{apt,dpkg,cache,log}/; \
-
-    echo "migrator ALL=(ALL) NOPASSWD: /entrypoint.sh setup-workspace" > /etc/sudoers.d/migrator-setup-workspace; \
-
-    mkdir $HOME; \
-    useradd --shell $SHELL --home-dir $HOME migrator; \
 )
 
-USER migrator:migrator
-WORKDIR $HOME
-VOLUME $HOME
+COPY get-authors.sh /usr/bin/get-authors
 
-ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "bash" ]
+WORKDIR $WORKSPACE
